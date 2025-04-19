@@ -1,14 +1,9 @@
 package net.demo.simple_coordinates_mod;
 
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.MaceItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,14 +18,21 @@ public class ForgeClientHandler {
             double playerX = player.getX();
             double playerY = player.getY();
             double playerZ = player.getZ();
+
             int x = (int)playerX;
             int y = (int)playerY;
             int z = (int)playerZ;
-            String playerXString = x+"";
-            String playerYString = y+"";
-            String playerZString = z+"";
-            String coords = String.format("%s %s %s",playerXString,playerYString,playerZString);
-            player.displayClientMessage(Component.literal(coords),true);
+
+            Component space = Component.literal("X:");
+            Component xCord = Component.literal(String.valueOf(x)).withStyle(ChatFormatting.RED);
+            Component space1 = Component.literal(" Y:");
+            Component yCord = Component.literal(String.valueOf(y)).withStyle(ChatFormatting.GREEN);
+            Component space2 = Component.literal(" Z:");
+            Component zCord = Component.literal(String.valueOf(z)).withStyle(ChatFormatting.BLUE);
+
+            Component coordinates = space.copy().append(xCord).append(space1).append(yCord).append(space2).append(zCord);
+
+            player.displayClientMessage(coordinates,true);
         }
     }
 }
